@@ -1,49 +1,79 @@
-import 'package:flutter/material.dart';
 import 'dart:async';
 
-import 'package:flutter/services.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:unity_mediation/unity_mediation.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(const UnityMediationExample());
 }
 
-class MyApp extends StatefulWidget {
-  const MyApp({Key? key}) : super(key: key);
+class UnityMediationExample extends StatefulWidget {
+  const UnityMediationExample({Key? key}) : super(key: key);
 
   @override
-  State<MyApp> createState() => _MyAppState();
+  State<UnityMediationExample> createState() => _UnityMediationExampleState();
 }
 
-class _MyAppState extends State<MyApp> {
-  String _platformVersion = 'Unknown';
+class _UnityMediationExampleState extends State<UnityMediationExample> {
+  bool _rewardedAdloaded = false;
+  bool _interstitialAdloaded = false;
 
   @override
   void initState() {
     super.initState();
-    initPlatformState();
+    initUnityMediation();
   }
 
-  // Platform messages are asynchronous, so we initialize in an async method.
-  Future<void> initPlatformState() async {
-    String platformVersion;
-    // Platform messages may fail, so we use a try/catch PlatformException.
-    // We also handle the message potentially returning null.
-    try {
-      platformVersion =
-          await UnityMediation.platformVersion ?? 'Unknown platform version';
-    } on PlatformException {
-      platformVersion = 'Failed to get platform version.';
-    }
+  Future<void> initUnityMediation() async {
+    UnityMediation.init(
+      gameId: AdManager.gameId,
+      onComplete: () {
+        print('Initialization Complete');
+        loadAds();
+      },
+      onFailed: (error, message) =>
+          print('Initialization Failed: $error $message'),
+    );
+  }
 
-    // If the widget was removed from the tree while the asynchronous platform
-    // message was in flight, we want to discard the reply rather than calling
-    // setState to update our non-existent appearance.
-    if (!mounted) return;
+  void loadAds() {
+    loadRewardedAd();
+    loadInterstitialAd();
+  }
 
+  void loadRewardedAd() {
     setState(() {
-      _platformVersion = platformVersion;
+      _rewardedAdloaded = false;
     });
+    UnityMediation.loadRewardedAd(
+      adUnitId: AdManager.rewardedAdUnitId,
+      onComplete: (adUnitId) {
+        print('Rewarded Ad Load Complete $adUnitId');
+        setState(() {
+          _rewardedAdloaded = true;
+        });
+      },
+      onFailed: (adUnitId, error, message) =>
+          print('Rewarded Ad Load Failed $adUnitId: $error $message'),
+    );
+  }
+
+  void loadInterstitialAd() {
+    setState(() {
+      _interstitialAdloaded = false;
+    });
+    UnityMediation.loadInterstitialAd(
+      adUnitId: AdManager.interstitialAdUnitId,
+      onComplete: (adUnitId) {
+        print('Interstitial Ad Load Complete $adUnitId');
+        setState(() {
+          _interstitialAdloaded = true;
+        });
+      },
+      onFailed: (adUnitId, error, message) =>
+          print('Interstitial Ad Load Failed $adUnitId: $error $message'),
+    );
   }
 
   @override
@@ -51,12 +81,85 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          title: const Text('Plugin example app'),
+          title: const Text('Unity Mediation Example'),
         ),
-        body: Center(
-          child: Text('Running on: $_platformVersion\n'),
+        body: SizedBox(
+          width: double.infinity,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  ElevatedButton(
+                    onPressed: _rewardedAdloaded
+                        ? () {
+                            UnityMediation.showRewardedAd(
+                              adUnitId: AdManager.rewardedAdUnitId,
+                              onFailed: (adUnitId, error, message) => print(
+                                  'Rewarded Ad $adUnitId failed: $error $message'),
+                              onStart: (adUnitId) =>
+                                  print('Rewarded Ad $adUnitId started'),
+                              onClick: (adUnitId) =>
+                                  print('Rewarded Ad $adUnitId click'),
+                              onRewarded: (adUnitId, reward) => print(
+                                  'Rewarded Ad $adUnitId rewarded $reward'),
+                              onClosed: (adUnitId) {
+                                print('Rewarded Ad $adUnitId closed');
+                                loadRewardedAd();
+                              },
+                            );
+                          }
+                        : null,
+                    child: const Text('Show Rewarded Ad'),
+                  ),
+                  ElevatedButton(
+                    onPressed: _interstitialAdloaded
+                        ? () {
+                            UnityMediation.showInterstitialAd(
+                              adUnitId: AdManager.interstitialAdUnitId,
+                              onFailed: (adUnitId, error, message) => print(
+                                  'Interstitial Ad $adUnitId failed: $error $message'),
+                              onStart: (adUnitId) =>
+                                  print('Interstitial Ad $adUnitId started'),
+                              onClick: (adUnitId) =>
+                                  print('Interstitial Ad $adUnitId click'),
+                              onClosed: (adUnitId) {
+                                print('Interstitial Ad $adUnitId closed');
+                                loadInterstitialAd();
+                              },
+                            );
+                          }
+                        : null,
+                    child: const Text('Show Interstitial Ad'),
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );
+  }
+}
+
+class AdManager {
+  static String get gameId {
+    if (defaultTargetPlatform == TargetPlatform.android) {
+      return 'your_android_game_id';
+    }
+    if (defaultTargetPlatform == TargetPlatform.iOS) {
+      return '4562200';
+    }
+    return '';
+  }
+
+  static String get interstitialAdUnitId {
+    return 'unity_mediation_interstitial';
+  }
+
+  static String get rewardedAdUnitId {
+    return 'unity_mediation_rewarded';
   }
 }

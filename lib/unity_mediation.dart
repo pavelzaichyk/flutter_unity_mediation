@@ -1,13 +1,3 @@
+library unity_mediation;
 
-import 'dart:async';
-
-import 'package:flutter/services.dart';
-
-class UnityMediation {
-  static const MethodChannel _channel = MethodChannel('unity_mediation');
-
-  static Future<String?> get platformVersion async {
-    final String? version = await _channel.invokeMethod('getPlatformVersion');
-    return version;
-  }
-}
+export 'src/unity_mediation.dart';
