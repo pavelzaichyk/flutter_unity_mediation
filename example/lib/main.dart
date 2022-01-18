@@ -150,7 +150,7 @@ class AdManager {
       return 'your_android_game_id';
     }
     if (defaultTargetPlatform == TargetPlatform.iOS) {
-      return '4562200';
+      return 'your_ios_game_id';
     }
     return '';
   }

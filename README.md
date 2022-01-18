@@ -106,9 +106,3 @@ If you found this plugin helpful and would like to thank me:
 [![Buy Me A Coffee](https://img.shields.io/badge/Donate-Buy%20me%20a%20coffee-FFDD00?logo=buymeacoffee)](https://www.buymeacoffee.com/rebeloid)
 [![PayPal](https://img.shields.io/badge/Donate-PayPal-066BB7?logo=paypal)](https://paypal.me/pavelzaichyk)
 
-
-# Possible errors
-
-android/app/build.gradle
-
-minSdkVersion = 18
