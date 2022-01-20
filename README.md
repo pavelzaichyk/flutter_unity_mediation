@@ -15,11 +15,12 @@
 
 - [Getting Started](#getting-started)
     - [1. Configure](#1-configure)
-      - [iOS](#ios)
-      - [Android](#android)
-    - [2. Initialization](#2-initialization)
-    - [3. Rewarded Ad](#3-rewarded-ad)
-    - [4. Interstitial Ad](#4-interstitial-ad)
+          - [iOS](#ios)
+          - [Android](#android)
+    - [2. Configure ad sources](#2-configure-ad-sources)
+    - [3. Initialization](#3-initialization)
+    - [4. Rewarded Ad](#4-rewarded-ad)
+    - [5. Interstitial Ad](#5-interstitial-ad)
 - [Donate](#donate)
 
 ## Getting Started
@@ -38,7 +39,67 @@ source 'https://github.com/Unity-Technologies/unity-mediation-cocoapods-prod.git
 
 #### Android
 
-### 2. Initialization
+- set `minSdkVersion` to 21 in `android/app/build.gradle` file
+
+### 2. Configure ad sources
+
+For using additional advertising sources, it's needed to configure them.
+
+#### iOS
+
+Add dependencies of configured ad sources to `ios/Podfile` file from the table below
+
+```
+target 'Runner' do
+  use_frameworks!
+  use_modular_headers!
+  # list of adapters
+  flutter_install_all_ios_pods File.dirname(File.realpath(__FILE__))
+end
+```
+
+AdMob ad source requires additional configuration. Add your AdMob app ID to `ios/Runner/Info.plist` file
+
+```
+<key>GADApplicationIdentifier</key>
+<string>YOUR_ADMOB_APP_ID</string>
+```
+
+#### Android
+
+Add dependencies of configured ad sources to `android/app/build.gradle` file
+
+```
+dependencies {
+    // list of adapters
+}
+```
+
+AdMob ad source requires additional configuration. Add your AdMob app ID to `android/app/src/main/AndroidManifest.xml` file
+
+```
+<manifest>
+    <application>
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="YOUR_ADMOB_APP_ID"/>
+    </application>
+</manifest>
+```
+
+#### Ad Sources
+
+Source | iOS | Android
+--- | --- | --- 
+[AdColony](https://docs.unity.com/mediation/AdSourceSetupAdColony.htm) | ```pod 'UnityMediationAdColonyAdapter'``` | ```implementation "com.unity3d.mediation:adcolony-adapter:0.3.0"```
+[AppLovin](https://docs.unity.com/mediation/AdSourceSetupAppLovin.htm) | ```pod 'UnityMediationAppLovinAdapter'``` | ```implementation "com.unity3d.mediation:applovin-adapter:0.3.0"```
+[IronSource](https://docs.unity.com/mediation/AdSourceSetupIronSource.htm) | ```pod 'UnityMediationIronSourceAdapter'``` | ```implementation "com.unity3d.mediation:ironsource-adapter:0.3.0"  ```
+[Vungle](https://docs.unity.com/mediation/AdSourceSetupVungle.htm) | ```pod 'UnityMediationVungleAdapter'``` | ```implementation "com.unity3d.mediation:vungle-adapter:0.3.0"```
+[Meta Audience Network ](https://docs.unity.com/mediation/AdSourceSetupMetaAudienceNetwork.htm) | ```pod 'UnityMediationFacebookAdapter'``` | ```implementation "com.unity3d.mediation:facebook-adapter:0.3.0"```
+[AdMob](https://docs.unity.com/mediation/AdSourceSetupAdMob.htm) | ```pod 'UnityMediationAdmobAdapter'``` | ```implementation "com.unity3d.mediation:admob-adapter:0.3.0"```
+
+
+### 3. Initialization
 
 ```dart
 UnityMediation.init(
@@ -50,7 +111,7 @@ UnityMediation.init(
 
 Set your Game ID.
 
-### 3. Rewarded Ad
+### 4. Rewarded Ad
 
 ![Rewarded Video Ad](https://github.com/pavzay/flutter_unity_ads/raw/master/example/images/rewarded.gif "Rewarded Video Ad")
 
@@ -75,7 +136,7 @@ UnityMediation.showRewardedAd(
 );
 ```
 
-### 4. Interstitial Ad
+### 5. Interstitial Ad
 
 ![Interstitial Video Ad](https://github.com/pavzay/flutter_unity_ads/raw/master/example/images/interstitial.gif "Interstitial Video Ad")
 
