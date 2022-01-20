@@ -16,6 +16,10 @@ rootProject.allprojects {
     repositories {
         google()
         mavenCentral()
+        jcenter()
+        maven {
+            url 'https://unity3ddist.jfrog.io/artifactory/unity-mediation-mvn-prod-local/'
+        }
     }
 }
 
@@ -30,6 +34,11 @@ android {
     }
 
     defaultConfig {
-        minSdkVersion 16
+        minSdkVersion 21
     }
+}
+
+dependencies {
+    implementation "com.unity3d.mediation:mediation-sdk:0.3.0"
+    implementation "com.unity3d.mediation:unityads-adapter:0.3.0"
 }

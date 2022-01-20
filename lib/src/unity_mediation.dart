@@ -32,7 +32,6 @@ class UnityMediation {
     Function? onComplete,
     Function(UnityMediationInitializationError, String)? onFailed,
   ) {
-    print('init ${call.method} - ${call.arguments}');
     switch (call.method) {
       case initCompleteMethod:
         onComplete?.call();
@@ -120,7 +119,6 @@ class UnityMediation {
             String errorMessage)?
         onFailed,
   ) {
-    print('load ${call.method} - ${call.arguments}');
     switch (call.method) {
       case loadCompleteMethod:
         onComplete?.call(call.arguments[adUnitIdParameter]);
@@ -230,7 +228,6 @@ class UnityMediation {
             String errorMessage)?
         onFailed,
   ) {
-    print('show ${call.method} - ${call.arguments}');
     switch (call.method) {
       case showStartMethod:
         onStart?.call(call.arguments[adUnitIdParameter]);
@@ -302,6 +299,9 @@ enum UnityMediationShowError {
   notLoaded,
 
   networkError,
+
+  /// only for android
+  invalidActivity,
 
   /// Unknown error
   unknown
