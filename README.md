@@ -13,7 +13,7 @@
 
 [Unity Mediation](https://docs.unity.com/mediation/IntroToMediation.htm) plugin for Flutter Applications. This plugin is able to display Rewarded and Interstitial Ads from different ad sources.
 
-If your application uses only ads from Unity Ads source use [Unity Ads Plugin](https://pub.dev/packages/unity_ads_plugin).
+> If your application uses only ads from Unity Ads source use [Unity Ads Plugin](https://pub.dev/packages/unity_ads_plugin).
 
 - [Getting Started](#getting-started)
     - [1. Configure](#1-configure)
@@ -60,7 +60,7 @@ target 'Runner' do
 end
 ```
 
-AdMob ad source requires additional configuration. Add your AdMob app ID to `ios/Runner/Info.plist` file
+AdMob ad source requires additional configuration. If you use AdMob add your AdMob app ID to `ios/Runner/Info.plist` file
 
 ```
 <key>GADApplicationIdentifier</key>
@@ -77,7 +77,7 @@ dependencies {
 }
 ```
 
-AdMob ad source requires additional configuration. Add your AdMob app ID to `android/app/src/main/AndroidManifest.xml` file
+AdMob ad source requires additional configuration. If you use AdMob add your AdMob app ID to `android/app/src/main/AndroidManifest.xml` file
 
 ```
 <manifest>
@@ -103,6 +103,8 @@ Source | iOS | Android
 
 ### 3. Initialization
 
+Initialize Unity Mediation with your game ID
+
 ```dart
 UnityMediation.initialize(
   gameId: 'GAME_ID',
@@ -111,11 +113,9 @@ UnityMediation.initialize(
 );
 ```
 
-Set your Game ID.
-
 ### 4. Rewarded Ad
 
-![Rewarded Video Ad](https://github.com/pavzay/flutter_unity_ads/raw/master/example/images/rewarded.gif "Rewarded Video Ad")
+![Rewarded Video Ad](https://github.com/pavzay/flutter_unity_mediation/raw/master/example/images/rewarded_ad.gif "Rewarded Video Ad")
 
 Load an ad before show it.
 
@@ -126,6 +126,8 @@ UnityMediation.loadRewardedAd(
   onFailed: (adUnitId, error, message) => print('Rewarded Ad Load Failed $adUnitId: $error $message'),
 );
 ```
+
+Show a loaded rewarded ad.
 
 ```dart
 UnityMediation.showRewardedAd(
@@ -140,7 +142,7 @@ UnityMediation.showRewardedAd(
 
 ### 5. Interstitial Ad
 
-![Interstitial Video Ad](https://github.com/pavzay/flutter_unity_ads/raw/master/example/images/interstitial.gif "Interstitial Video Ad")
+![Interstitial Video Ad](https://github.com/pavzay/flutter_unity_mediation/raw/master/example/images/interstitial_ad.gif "Interstitial Video Ad")
 
 Load an ad before show it.
 
@@ -151,6 +153,8 @@ UnityMediation.loadInterstitialAd(
     onFailed: (adUnitId, error, message) => print('Interstitial Ad Load Failed $adUnitId: $error $message'),
 );
 ```
+
+Show a loaded interstitial ad.
 
 ```dart
 UnityMediation.showInterstitialAd(

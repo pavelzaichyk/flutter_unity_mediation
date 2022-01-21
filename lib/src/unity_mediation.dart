@@ -5,7 +5,7 @@ import 'constants.dart';
 class UnityMediation {
   static const MethodChannel _channel = MethodChannel(mainChannel);
 
-  static final Map<String, MethodChannel> _channels = {};
+  static final Map<String, _AdMethodChannel> _adChannels = {};
 
   /// Initializes the Unity Mediation.
   /// It is mandatory to call this method before any InterstitialAd and RewardedAd can load.
@@ -104,42 +104,15 @@ class UnityMediation {
     Function(String adUnitId)? onComplete,
     Function(String adUnitId, LoadError error, String errorMessage)? onFailed,
   }) async {
-    _channels
-        .putIfAbsent(
-            adUnitId, () => MethodChannel('${videoAdChannel}_$adUnitId'))
-        .setMethodCallHandler(
-            (call) => _loadMethodCall(call, onComplete, onFailed));
+    _adChannels.putIfAbsent(adUnitId, () => _AdMethodChannel(adUnitId)).update(
+          onLoadComplete: onComplete,
+          onLoadFailed: onFailed,
+        );
 
     final arguments = <String, dynamic>{
       adUnitIdParameter: adUnitId,
     };
     await _channel.invokeMethod(methodName, arguments);
-  }
-
-  static Future<dynamic> _loadMethodCall(
-    MethodCall call,
-    Function(String adUnitId)? onComplete,
-    Function(String adUnitId, LoadError error, String errorMessage)? onFailed,
-  ) {
-    switch (call.method) {
-      case loadCompleteMethod:
-        onComplete?.call(call.arguments[adUnitIdParameter]);
-        break;
-      case loadFailedMethod:
-        onFailed?.call(
-          call.arguments[adUnitIdParameter],
-          _loadErrorFromString(call.arguments[errorCodeParameter]),
-          call.arguments[errorMessageParameter],
-        );
-        break;
-    }
-    return Future.value(true);
-  }
-
-  static LoadError _loadErrorFromString(String error) {
-    return LoadError.values.firstWhere(
-        (e) => error == e.toString().split('.').last,
-        orElse: () => LoadError.unknown);
   }
 
   /// Show a rewarded Ad.
@@ -202,59 +175,18 @@ class UnityMediation {
     Function(String adUnitId)? onClosed,
     Function(String adUnitId, ShowError error, String errorMessage)? onFailed,
   }) async {
-    _channels
-        .putIfAbsent(
-            adUnitId, () => MethodChannel('${videoAdChannel}_$adUnitId'))
-        .setMethodCallHandler((call) => _showMethodCall(
-            call, onStart, onClick, onRewarded, onClosed, onFailed));
+    _adChannels.putIfAbsent(adUnitId, () => _AdMethodChannel(adUnitId)).update(
+          onAdStart: onStart,
+          onAdClick: onClick,
+          onAdClosed: onClosed,
+          onShowFailed: onFailed,
+          onAdRewarded: onRewarded,
+        );
 
     final args = <String, dynamic>{
       adUnitIdParameter: adUnitId,
     };
     await _channel.invokeMethod(methodName, args);
-  }
-
-  static Future<dynamic> _showMethodCall(
-    MethodCall call,
-    Function(String adUnitId)? onStart,
-    Function(String adUnitId)? onClick,
-    Function(String adUnitId, UnityMediationReward reward)? onRewarded,
-    Function(String adUnitId)? onClosed,
-    Function(String adUnitId, ShowError error, String errorMessage)? onFailed,
-  ) {
-    switch (call.method) {
-      case showStartMethod:
-        onStart?.call(call.arguments[adUnitIdParameter]);
-        break;
-      case showClosedMethod:
-        onClosed?.call(call.arguments[adUnitIdParameter]);
-        break;
-      case showClickMethod:
-        onClick?.call(call.arguments[adUnitIdParameter]);
-        break;
-      case showRewardedMethod:
-        onRewarded?.call(
-            call.arguments[adUnitIdParameter],
-            UnityMediationReward(
-              call.arguments[rewardTypeParameter],
-              call.arguments[rewardAmountParameter],
-            ));
-        break;
-      case showFailedMethod:
-        onFailed?.call(
-          call.arguments[adUnitIdParameter],
-          _showErrorFromString(call.arguments[errorCodeParameter]),
-          call.arguments[errorMessageParameter],
-        );
-        break;
-    }
-    return Future.value(true);
-  }
-
-  static ShowError _showErrorFromString(String error) {
-    return ShowError.values.firstWhere(
-        (e) => error == e.toString().split('.').last,
-        orElse: () => ShowError.unknown);
   }
 
   /// This method returns the current [AdState] of the requested ad.
@@ -354,4 +286,91 @@ enum AdState {
 
   /// Indicates that an Ad Unit is in the process of showing loaded content. Ad Units that are showing cannot be loaded or shown again until playback completes (or fails). This state occurs when Show is called.
   showing,
+}
+
+class _AdMethodChannel {
+  final MethodChannel channel;
+  Function(String adUnitId)? onLoadComplete;
+  Function(String adUnitId, LoadError error, String errorMessage)? onLoadFailed;
+  Function(String adUnitId)? onAdStart;
+  Function(String adUnitId)? onAdClick;
+  Function(String adUnitId, UnityMediationReward reward)? onAdRewarded;
+  Function(String adUnitId)? onAdClosed;
+  Function(String adUnitId, ShowError error, String errorMessage)? onShowFailed;
+
+  _AdMethodChannel(String adUnitId)
+      : channel = MethodChannel('${videoAdChannel}_$adUnitId') {
+    channel.setMethodCallHandler(_methodCallHandler);
+  }
+
+  void update({
+    Function(String adUnitId)? onLoadComplete,
+    Function(String adUnitId, LoadError error, String errorMessage)?
+        onLoadFailed,
+    Function(String adUnitId)? onAdStart,
+    Function(String adUnitId)? onAdClick,
+    Function(String adUnitId, UnityMediationReward reward)? onAdRewarded,
+    Function(String adUnitId)? onAdClosed,
+    Function(String adUnitId, ShowError error, String errorMessage)?
+        onShowFailed,
+  }) {
+    this.onLoadComplete = onLoadComplete ?? this.onLoadComplete;
+    this.onLoadFailed = onLoadFailed ?? this.onLoadFailed;
+    this.onAdStart = onAdStart ?? this.onAdStart;
+    this.onAdClick = onAdClick ?? this.onAdClick;
+    this.onAdRewarded = onAdRewarded ?? this.onAdRewarded;
+    this.onAdClosed = onAdClosed ?? this.onAdClosed;
+    this.onShowFailed = onShowFailed ?? this.onShowFailed;
+  }
+
+  Future _methodCallHandler(MethodCall call) async {
+    switch (call.method) {
+      case loadCompleteMethod:
+        onLoadComplete?.call(call.arguments[adUnitIdParameter]);
+        break;
+      case loadFailedMethod:
+        onLoadFailed?.call(
+          call.arguments[adUnitIdParameter],
+          _loadErrorFromString(call.arguments[errorCodeParameter]),
+          call.arguments[errorMessageParameter],
+        );
+        break;
+      case showStartMethod:
+        onAdStart?.call(call.arguments[adUnitIdParameter]);
+        break;
+      case showClosedMethod:
+        onAdClosed?.call(call.arguments[adUnitIdParameter]);
+        break;
+      case showClickMethod:
+        onAdClick?.call(call.arguments[adUnitIdParameter]);
+        break;
+      case showRewardedMethod:
+        onAdRewarded?.call(
+            call.arguments[adUnitIdParameter],
+            UnityMediationReward(
+              call.arguments[rewardTypeParameter],
+              call.arguments[rewardAmountParameter],
+            ));
+        break;
+      case showFailedMethod:
+        onShowFailed?.call(
+          call.arguments[adUnitIdParameter],
+          _showErrorFromString(call.arguments[errorCodeParameter]),
+          call.arguments[errorMessageParameter],
+        );
+        break;
+    }
+  }
+
+  LoadError _loadErrorFromString(String error) {
+    return LoadError.values.firstWhere(
+        (e) => error == e.toString().split('.').last,
+        orElse: () => LoadError.unknown);
+  }
+
+  ShowError _showErrorFromString(String error) {
+    return ShowError.values.firstWhere(
+        (e) => error == e.toString().split('.').last,
+        orElse: () => ShowError.unknown);
+  }
 }
