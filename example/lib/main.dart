@@ -26,7 +26,7 @@ class _UnityMediationExampleState extends State<UnityMediationExample> {
   }
 
   Future<void> initUnityMediation() async {
-    UnityMediation.init(
+    UnityMediation.initialize(
       gameId: AdManager.gameId,
       onComplete: () {
         print('Initialization Complete');

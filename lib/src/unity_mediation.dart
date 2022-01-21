@@ -13,11 +13,10 @@ class UnityMediation {
   /// * [gameId] - The game ID listed in publisher [dashboard](https://dashboard.unity3d.com).
   /// * [onComplete] - called when initialization has completed successfully.
   /// * [onFailed] - called when initialization has failed.
-  static Future<void> init({
+  static Future<void> initialize({
     required String gameId,
     Function? onComplete,
-    Function(UnityMediationInitializationError error, String errorMessage)?
-        onFailed,
+    Function(InitializationError error, String errorMessage)? onFailed,
   }) async {
     Map<String, dynamic> arguments = {
       gameIdParameter: gameId,
@@ -30,7 +29,7 @@ class UnityMediation {
   static Future<dynamic> _initMethodCall(
     MethodCall call,
     Function? onComplete,
-    Function(UnityMediationInitializationError, String)? onFailed,
+    Function(InitializationError, String)? onFailed,
   ) {
     switch (call.method) {
       case initCompleteMethod:
@@ -45,11 +44,22 @@ class UnityMediation {
     return Future.value(true);
   }
 
-  static UnityMediationInitializationError _initializationErrorFromString(
-      String error) {
-    return UnityMediationInitializationError.values.firstWhere(
+  static InitializationError _initializationErrorFromString(String error) {
+    return InitializationError.values.firstWhere(
         (e) => error == e.toString().split('.').last,
-        orElse: () => UnityMediationInitializationError.unknown);
+        orElse: () => InitializationError.unknown);
+  }
+
+  /// This method returns the current initialization state of the Unity Mediation service at runtime.
+  static Future<InitializationState> getInitializationState() async {
+    final String state = await _channel.invokeMethod(initStateMethod, {});
+    return _initializationStateFromString(state);
+  }
+
+  static InitializationState _initializationStateFromString(String state) {
+    return InitializationState.values.firstWhere(
+        (e) => state == e.toString().split('.').last,
+        orElse: () => InitializationState.uninitialized);
   }
 
   /// Load a placement to make it available to show. Ads generally take a few seconds to finish loading before they can be shown.
@@ -60,9 +70,7 @@ class UnityMediation {
   static Future<void> loadRewardedAd({
     required String adUnitId,
     Function(String adUnitId)? onComplete,
-    Function(String adUnitId, UnityMediationLoadError error,
-            String errorMessage)?
-        onFailed,
+    Function(String adUnitId, LoadError error, String errorMessage)? onFailed,
   }) async {
     await _loadAd(
       methodName: loadRewardedAdMethod,
@@ -80,9 +88,7 @@ class UnityMediation {
   static Future<void> loadInterstitialAd({
     required String adUnitId,
     Function(String adUnitId)? onComplete,
-    Function(String adUnitId, UnityMediationLoadError error,
-            String errorMessage)?
-        onFailed,
+    Function(String adUnitId, LoadError error, String errorMessage)? onFailed,
   }) async {
     await _loadAd(
       methodName: loadInterstitialAdMethod,
@@ -96,9 +102,7 @@ class UnityMediation {
     required String methodName,
     required String adUnitId,
     Function(String adUnitId)? onComplete,
-    Function(String adUnitId, UnityMediationLoadError error,
-            String errorMessage)?
-        onFailed,
+    Function(String adUnitId, LoadError error, String errorMessage)? onFailed,
   }) async {
     _channels
         .putIfAbsent(
@@ -115,9 +119,7 @@ class UnityMediation {
   static Future<dynamic> _loadMethodCall(
     MethodCall call,
     Function(String adUnitId)? onComplete,
-    Function(String adUnitId, UnityMediationLoadError error,
-            String errorMessage)?
-        onFailed,
+    Function(String adUnitId, LoadError error, String errorMessage)? onFailed,
   ) {
     switch (call.method) {
       case loadCompleteMethod:
@@ -134,10 +136,10 @@ class UnityMediation {
     return Future.value(true);
   }
 
-  static UnityMediationLoadError _loadErrorFromString(String error) {
-    return UnityMediationLoadError.values.firstWhere(
+  static LoadError _loadErrorFromString(String error) {
+    return LoadError.values.firstWhere(
         (e) => error == e.toString().split('.').last,
-        orElse: () => UnityMediationLoadError.unknown);
+        orElse: () => LoadError.unknown);
   }
 
   /// Show a rewarded Ad.
@@ -154,9 +156,7 @@ class UnityMediation {
     Function(String adUnitId)? onClick,
     Function(String adUnitId, UnityMediationReward reward)? onRewarded,
     Function(String adUnitId)? onClosed,
-    Function(String adUnitId, UnityMediationShowError error,
-            String errorMessage)?
-        onFailed,
+    Function(String adUnitId, ShowError error, String errorMessage)? onFailed,
   }) async {
     await _showAd(
       methodName: showRewardedAdMethod,
@@ -181,9 +181,7 @@ class UnityMediation {
     Function(String adUnitId)? onStart,
     Function(String adUnitId)? onClick,
     Function(String adUnitId)? onClosed,
-    Function(String adUnitId, UnityMediationShowError error,
-            String errorMessage)?
-        onFailed,
+    Function(String adUnitId, ShowError error, String errorMessage)? onFailed,
   }) async {
     await _showAd(
       methodName: showInterstitialAdMethod,
@@ -202,9 +200,7 @@ class UnityMediation {
     Function(String adUnitId)? onClick,
     Function(String adUnitId, UnityMediationReward reward)? onRewarded,
     Function(String adUnitId)? onClosed,
-    Function(String adUnitId, UnityMediationShowError error,
-            String errorMessage)?
-        onFailed,
+    Function(String adUnitId, ShowError error, String errorMessage)? onFailed,
   }) async {
     _channels
         .putIfAbsent(
@@ -224,9 +220,7 @@ class UnityMediation {
     Function(String adUnitId)? onClick,
     Function(String adUnitId, UnityMediationReward reward)? onRewarded,
     Function(String adUnitId)? onClosed,
-    Function(String adUnitId, UnityMediationShowError error,
-            String errorMessage)?
-        onFailed,
+    Function(String adUnitId, ShowError error, String errorMessage)? onFailed,
   ) {
     switch (call.method) {
       case showStartMethod:
@@ -257,10 +251,36 @@ class UnityMediation {
     return Future.value(true);
   }
 
-  static UnityMediationShowError _showErrorFromString(String error) {
-    return UnityMediationShowError.values.firstWhere(
+  static ShowError _showErrorFromString(String error) {
+    return ShowError.values.firstWhere(
         (e) => error == e.toString().split('.').last,
-        orElse: () => UnityMediationShowError.unknown);
+        orElse: () => ShowError.unknown);
+  }
+
+  /// This method returns the current [AdState] of the requested ad.
+  /// * [adUnitId] - The ID of the rewarded ad unit.
+  static Future<AdState> getRewardedAdState(String adUnitId) async {
+    final String state = await _channel.invokeMethod(
+      rewardedAdStateMethod,
+      {adUnitIdParameter: adUnitId},
+    );
+    return _adStateFromString(state);
+  }
+
+  /// This method returns the current [AdState] of the interstitial ad.
+  /// * [adUnitId] - The ID of the interstitial ad unit.
+  static Future<AdState> getInterstitialAdState(String adUnitId) async {
+    final String state = await _channel.invokeMethod(
+      interstitialAdStateMethod,
+      {adUnitIdParameter: adUnitId},
+    );
+    return _adStateFromString(state);
+  }
+
+  static AdState _adStateFromString(String state) {
+    return AdState.values.firstWhere(
+        (e) => state == e.toString().split('.').last,
+        orElse: () => AdState.unloaded);
   }
 }
 
@@ -271,17 +291,29 @@ class UnityMediationReward {
   const UnityMediationReward(this.type, this.amount);
 }
 
+/// Initialization states of the Mediation SDK.
+enum InitializationState {
+  /// The Mediation SDK is not initialized.
+  uninitialized,
+
+  /// The Mediation SDK is in the process of initializing.
+  initializing,
+
+  /// The Mediation SDK is properly initialized.
+  initialized,
+}
+
 /// Initialization error states.
-enum UnityMediationInitializationError {
+enum InitializationError {
   networkError,
 
-  /// Unknown error
+  /// An unknown error occurred.
   unknown
 }
 
-/// Error category of load errors
-enum UnityMediationLoadError {
-  /// [UnityMediation.init] needs to be called with a valid gameId before loading the ad unit.
+/// Errors that can cause an ad not to load.
+enum LoadError {
+  /// [UnityMediation.initialize] needs to be called with a valid gameId before loading the ad unit.
   sdkNotInitialized,
 
   /// The ad unit successfully ran through the waterfall but was unable to get fill from any line items.
@@ -290,19 +322,36 @@ enum UnityMediationLoadError {
   /// A critical HTTP network request has failed.
   networkError,
 
-  /// Unknown error
+  /// An unknown error occurred.
   unknown
 }
 
-/// The error category of show errors
-enum UnityMediationShowError {
+/// Errors that can cause an ad not to show.
+enum ShowError {
+  /// The ad is loaded, but not available to show. In this case, the Ad Unit will reset to unloaded in order to attempt to load again.
   notLoaded,
 
+  /// An issue occurred with the ad network attempting to show the ad. In this case, be sure to check for potential problems such as invalid ad network values, cache issues, or video player issues, pertaining to the ad network. Unity Mediation will supply the original message and error code from the problematic ad network.
   networkError,
 
   /// only for android
   invalidActivity,
 
-  /// Unknown error
+  /// An unknown error occurred.
   unknown
+}
+
+/// States of a requested ad.
+enum AdState {
+  /// Indicates that an Ad Unit is ready to load. Ad Units that are unloaded cannot show ads. This state occurs when an ad is instanced, failed to load, failed to show, or is closed.
+  unloaded,
+
+  /// Indicates that an Ad Unit is in the process of loading ad content. Ad Units that are loading cannot be loaded again until the in-process load fails, or after the loaded ad shows (or fails to show). This state occurs when an Ad Unit requests an ad.
+  loading,
+
+  /// Indicates that an Ad Unit has loaded content that is ready to show. Ad Units that are loaded cannot be loaded again until the content shows (or fails to show). This state occurs when an ad load request succeeds.
+  loaded,
+
+  /// Indicates that an Ad Unit is in the process of showing loaded content. Ad Units that are showing cannot be loaded or shown again until playback completes (or fails). This state occurs when Show is called.
+  showing,
 }

@@ -8,6 +8,7 @@ struct UnityMediationConstants {
     
     //initialize
     static let INIT_METHOD = "init";
+    static let INIT_STATE_METHOD = "initState";
     static let GAME_ID_PARAMETER = "gameId";
     static let INIT_COMPLETE_METHOD = "initComplete";
     static let INIT_FAILED_METHOD = "initFailed";
@@ -29,4 +30,7 @@ struct UnityMediationConstants {
     static let  REWARD_TYPE_PARAMETER = "rewardType";
     static let  REWARD_AMOUNT_PARAMETER = "rewardAmountType";
     
+    //state
+    static let REWARDED_AD_STATE_METHOD = "rewardedAdState";
+    static let INTERSTITIAL_AD_STATE_METHOD = "interstitialAdStateMethod";
 }

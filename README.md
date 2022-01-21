@@ -11,7 +11,9 @@
 [![Buy Me A Coffee](https://img.shields.io/badge/Donate-Buy%20me%20a%20coffee-FFDD00?logo=buymeacoffee)](https://www.buymeacoffee.com/rebeloid)
 [![PayPal](https://img.shields.io/badge/Donate-PayPal-066BB7?logo=paypal)](https://paypal.me/pavelzaichyk)
 
-[Unity Mediation](https://docs.unity.com/mediation/IntroToMediation.htm) plugin for Flutter Applications. This plugin is able to display Rewarded and Interstitial Ads.
+[Unity Mediation](https://docs.unity.com/mediation/IntroToMediation.htm) plugin for Flutter Applications. This plugin is able to display Rewarded and Interstitial Ads from different ad sources.
+
+If your application uses only ads from Unity Ads source use [Unity Ads Plugin](https://pub.dev/packages/unity_ads_plugin).
 
 - [Getting Started](#getting-started)
     - [1. Configure](#1-configure)
@@ -102,7 +104,7 @@ Source | iOS | Android
 ### 3. Initialization
 
 ```dart
-UnityMediation.init(
+UnityMediation.initialize(
   gameId: 'GAME_ID',
   onComplete: () => print('Initialization Complete'),
   onFailed: (error, message) => print('Initialization Failed: $error $message'),

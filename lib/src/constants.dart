@@ -7,6 +7,7 @@ const errorMessageParameter = "errorMessage";
 
 //initialize
 const initMethod = "init";
+const initStateMethod = "initState";
 const gameIdParameter = "gameId";
 const initCompleteMethod = "initComplete";
 const initFailedMethod = "initFailed";
@@ -27,3 +28,7 @@ const showClosedMethod = "showClosed";
 const showClickMethod = "showClick";
 const rewardTypeParameter = "rewardType";
 const rewardAmountParameter = "rewardAmountType";
+
+//state
+const rewardedAdStateMethod = "rewardedAdState";
+const interstitialAdStateMethod = "interstitialAdStateMethod";

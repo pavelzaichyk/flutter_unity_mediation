@@ -1,12 +1,14 @@
 import UnityMediationSdk
 
 class UnityMediationInterstitialAd {
+    var adUnitChannels: [String: FlutterMethodChannel]
     var ads: [String: UMSInterstitialAd];
     let loadDelegate: UnityMediationInterstitialAdLoadDelegate;
     let showDelegate: UnityMediationInterstitialAdShowDelegate;
     let viewController : UIViewController;
     
-    init(messenger: FlutterBinaryMessenger, adUnitChannels: [String: FlutterMethodChannel], viewController : UIViewController) {
+    init(messenger: FlutterBinaryMessenger, viewController : UIViewController) {
+        self.adUnitChannels = [String: FlutterMethodChannel]()
         self.ads = [String: UMSInterstitialAd]();
         self.viewController = viewController;
         self.loadDelegate = UnityMediationInterstitialAdLoadDelegate(messenger: messenger, adUnitChannels: adUnitChannels);
@@ -14,20 +16,24 @@ class UnityMediationInterstitialAd {
     }
     
     public func load(_ args: NSDictionary) -> Bool {
-        let adUnitId = args[UnityMediationConstants.AD_UNIT_ID_PARAMETER] as! String
-        let ad = getAd(adUnitId)
+        let ad = getAd(args)
         ad.load(with: loadDelegate)
         return true
     }
     
     public func show(_ args: NSDictionary) -> Bool {
-        let adUnitId = args[UnityMediationConstants.AD_UNIT_ID_PARAMETER] as! String
-        let ad = getAd(adUnitId)
+        let ad = getAd(args)
         ad.show(with: viewController, delegate: showDelegate)
         return true
     }
     
-    private func getAd(_ adUnitId: String) -> UMSInterstitialAd {
+    public func getState(_ args: NSDictionary) -> String {
+        let ad = getAd(args)
+        return StateUtils.convertState(ad.getState())
+    }
+    
+    private func getAd(_ args: NSDictionary) -> UMSInterstitialAd {
+        let adUnitId = args[UnityMediationConstants.AD_UNIT_ID_PARAMETER] as! String
         let ad = ads[adUnitId]
         if (ad != nil) {
             return ad!
@@ -37,4 +43,6 @@ class UnityMediationInterstitialAd {
         ads[adUnitId] = newAd
         return newAd
     }
+    
+    
 }

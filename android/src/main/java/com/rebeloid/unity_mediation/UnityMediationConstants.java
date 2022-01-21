@@ -1,6 +1,6 @@
 package com.rebeloid.unity_mediation;
 
-public abstract class UnityMediationConstants {
+public final class UnityMediationConstants {
 
     public static final String MAIN_CHANNEL = "com.rebeloid.unity_mediation";
     public static final String VIDEO_AD_CHANNEL = MAIN_CHANNEL + "/videoAd";
@@ -10,6 +10,7 @@ public abstract class UnityMediationConstants {
 
     //initialize
     public static final String INIT_METHOD = "init";
+    public static final String INIT_STATE_METHOD = "initState";
     public static final String GAME_ID_PARAMETER = "gameId";
     public static final String INIT_COMPLETE_METHOD = "initComplete";
     public static final String INIT_FAILED_METHOD = "initFailed";
@@ -30,6 +31,10 @@ public abstract class UnityMediationConstants {
     public static final String SHOW_CLICK_METHOD = "showClick";
     public static final String REWARD_TYPE_PARAMETER = "rewardType";
     public static final String REWARD_AMOUNT_PARAMETER = "rewardAmountType";
+
+    //state
+    public static final String REWARDED_AD_STATE_METHOD = "rewardedAdState";
+    public static final String INTERSTITIAL_AD_STATE_METHOD = "interstitialAdStateMethod";
 
     private UnityMediationConstants() {
     }

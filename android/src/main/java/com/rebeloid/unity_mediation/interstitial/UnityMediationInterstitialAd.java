@@ -2,6 +2,7 @@ package com.rebeloid.unity_mediation.interstitial;
 
 import android.app.Activity;
 
+import com.rebeloid.unity_mediation.StateUtils;
 import com.rebeloid.unity_mediation.UnityMediationConstants;
 import com.unity3d.mediation.IInterstitialAdLoadListener;
 import com.unity3d.mediation.IInterstitialAdShowListener;
@@ -31,20 +32,24 @@ public class UnityMediationInterstitialAd {
     }
 
     public boolean load(Map<?, ?> arguments) {
-        String adUnitId = (String) arguments.get(UnityMediationConstants.AD_UNIT_ID_PARAMETER);
-        InterstitialAd ad = getAd(adUnitId);
+        InterstitialAd ad = getAd(arguments);
         ad.load(loadListener);
         return true;
     }
 
     public boolean show(Map<?, ?> arguments) {
-        String adUnitId = (String) arguments.get(UnityMediationConstants.AD_UNIT_ID_PARAMETER);
-        InterstitialAd ad = getAd(adUnitId);
+        InterstitialAd ad = getAd(arguments);
         ad.show(showListener);
         return true;
     }
 
-    private InterstitialAd getAd(String adUnitId) {
+    public String getState(Map<?, ?> arguments) {
+        InterstitialAd ad = getAd(arguments);
+        return StateUtils.convertState(ad.getAdState());
+    }
+
+    private InterstitialAd getAd(Map<?, ?> arguments) {
+        String adUnitId = (String) arguments.get(UnityMediationConstants.AD_UNIT_ID_PARAMETER);
         InterstitialAd ad = ads.get(adUnitId);
         if (ad != null) {
             return ad;

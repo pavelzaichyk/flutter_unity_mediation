@@ -4,9 +4,7 @@ import com.unity3d.mediation.errors.LoadError;
 import com.unity3d.mediation.errors.SdkInitializationError;
 import com.unity3d.mediation.errors.ShowError;
 
-public abstract class ErrorUtils {
-    private ErrorUtils() {
-    }
+public final class ErrorUtils {
 
     public static String convertError(LoadError error) {
         switch (error) {
@@ -47,5 +45,8 @@ public abstract class ErrorUtils {
             default:
                 return "";
         }
+    }
+
+    private ErrorUtils() {
     }
 }

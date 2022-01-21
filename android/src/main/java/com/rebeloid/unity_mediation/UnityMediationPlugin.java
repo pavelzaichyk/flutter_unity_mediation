@@ -43,6 +43,9 @@ public class UnityMediationPlugin implements FlutterPlugin, MethodCallHandler, A
             case UnityMediationConstants.INIT_METHOD:
                 result.success(unityMediationInitialization.initialize(arguments));
                 break;
+            case UnityMediationConstants.INIT_STATE_METHOD:
+                result.success(unityMediationInitialization.getInitializationState());
+                break;
             case UnityMediationConstants.LOAD_REWARDED_AD_METHOD:
                 result.success(rewardedAd.load(arguments));
                 break;
@@ -54,6 +57,12 @@ public class UnityMediationPlugin implements FlutterPlugin, MethodCallHandler, A
                 break;
             case UnityMediationConstants.SHOW_INTERSTITIAL_AD_METHOD:
                 result.success(interstitialAd.show(arguments));
+                break;
+            case UnityMediationConstants.REWARDED_AD_STATE_METHOD:
+                result.success(rewardedAd.getState(arguments));
+                break;
+            case UnityMediationConstants.INTERSTITIAL_AD_STATE_METHOD:
+                result.success(interstitialAd.getState(arguments));
                 break;
             default:
                 result.notImplemented();

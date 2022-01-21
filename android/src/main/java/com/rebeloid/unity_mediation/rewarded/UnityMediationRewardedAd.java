@@ -2,9 +2,11 @@ package com.rebeloid.unity_mediation.rewarded;
 
 import android.app.Activity;
 
+import com.rebeloid.unity_mediation.StateUtils;
 import com.rebeloid.unity_mediation.UnityMediationConstants;
 import com.unity3d.mediation.IRewardedAdLoadListener;
 import com.unity3d.mediation.IRewardedAdShowListener;
+import com.unity3d.mediation.InterstitialAd;
 import com.unity3d.mediation.RewardedAd;
 
 import java.util.HashMap;
@@ -31,20 +33,24 @@ public class UnityMediationRewardedAd {
     }
 
     public boolean load(Map<?, ?> arguments) {
-        String adUnitId = (String) arguments.get(UnityMediationConstants.AD_UNIT_ID_PARAMETER);
-        RewardedAd ad = getAd(adUnitId);
+        RewardedAd ad = getAd(arguments);
         ad.load(loadListener);
         return true;
     }
 
     public boolean show(Map<?, ?> arguments) {
-        String adUnitId = (String) arguments.get(UnityMediationConstants.AD_UNIT_ID_PARAMETER);
-        RewardedAd ad = getAd(adUnitId);
+        RewardedAd ad = getAd(arguments);
         ad.show(showListener);
         return true;
     }
 
-    private RewardedAd getAd(String adUnitId) {
+    public String getState(Map<?, ?> arguments) {
+        RewardedAd ad = getAd(arguments);
+        return StateUtils.convertState(ad.getAdState());
+    }
+
+    private RewardedAd getAd(Map<?, ?> arguments) {
+        String adUnitId = (String) arguments.get(UnityMediationConstants.AD_UNIT_ID_PARAMETER);
         RewardedAd ad = ads.get(adUnitId);
         if (ad != null) {
             return ad;
