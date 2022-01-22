@@ -115,7 +115,7 @@ UnityMediation.initialize(
 
 ### 4. Rewarded Ad
 
-![Rewarded Video Ad](https://github.com/pavzay/flutter_unity_mediation/raw/master/example/images/rewarded_ad.gif "Rewarded Video Ad")
+![Rewarded Video Ad](https://i.giphy.com/media/3jFdYYJ19T1hXWLG9T/giphy.gif "Rewarded Video Ad")
 
 Load an ad before show it.
 
@@ -142,7 +142,7 @@ UnityMediation.showRewardedAd(
 
 ### 5. Interstitial Ad
 
-![Interstitial Video Ad](https://github.com/pavzay/flutter_unity_mediation/raw/master/example/images/interstitial_ad.gif "Interstitial Video Ad")
+![Interstitial Video Ad](https://i.giphy.com/media/ZR2ZMhinT90z3wVBlY/giphy.gif "Interstitial Video Ad")
 
 Load an ad before show it.
 
