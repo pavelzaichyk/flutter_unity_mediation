@@ -1,7 +1,7 @@
 # Unity Mediation
 
 [![Pub](https://img.shields.io/pub/v/unity_mediation.svg)](https://pub.dev/packages/unity_mediation)
-[![License](https://img.shields.io/github/license/pavzay/flutter_unity_mediation)](https://github.com/pavzay/flutter_unity_mediation/blob/master/LICENSE)
+[![License](https://img.shields.io/github/license/pavelzaichyk/flutter_unity_mediation)](https://github.com/pavelzaichyk/flutter_unity_mediation/blob/master/LICENSE)
 [![Pub likes](https://badgen.net/pub/likes/unity_mediation)](https://pub.dev/packages/unity_mediation/score)
 [![Pub popularity](https://badgen.net/pub/popularity/unity_mediation)](https://pub.dev/packages/unity_mediation/score)
 [![Pub points](https://badgen.net/pub/points/unity_mediation)](https://pub.dev/packages/unity_mediation/score)
@@ -168,8 +168,9 @@ UnityMediation.showInterstitialAd(
 
 ## Donate
 
-If you found this plugin helpful and would like to thank me:
+Your donation motivates me to work more on plugins and packages. If you found this plugin helpful and would like to thank me:
 
-[![Buy Me A Coffee](https://img.shields.io/badge/Donate-Buy%20me%20a%20coffee-FFDD00?logo=buymeacoffee)](https://www.buymeacoffee.com/rebeloid)
+[![Donate](https://www.paypalobjects.com/en_US/PL/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/donate/?hosted_button_id=BETLWH4Z8G7UQ)
+[![Buy Me A Coffee](https://img.buymeacoffee.com/button-api/?text=Buy%20me%20a%20coffee&emoji=&slug=rebeloid&button_colour=FFDD00&font_colour=000000&font_family=Cookie&outline_colour=000000&coffee_colour=ffffff)](https://www.buymeacoffee.com/rebeloid)
 [![PayPal](https://img.shields.io/badge/Donate-PayPal-066BB7?logo=paypal)](https://paypal.me/pavelzaichyk)
 

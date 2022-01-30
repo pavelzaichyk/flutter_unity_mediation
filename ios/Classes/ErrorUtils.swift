@@ -5,8 +5,6 @@ class ErrorUtils {
         switch (error) {
         case .unknown:
             return "unknown";
-        case .none:
-            return ""
         case .noFill:
             return "noFill";
         case .networkError:
