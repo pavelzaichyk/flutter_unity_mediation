@@ -143,7 +143,8 @@ UnityMediation.showRewardedAd(
 #### Server-to-server redeem callbacks
 
 To use server-to-server callbacks, you need to set `userId` parameter when call `showRewardedAd`.
-Read more on [https://docs.unity.com/mediation/S2SRedeemCallbacks.html](docs.unity.com).
+
+Read more on [docs.unity.com](https://docs.unity.com/mediation/S2SRedeemCallbacks.html).
 
 ### 5. Interstitial Ad
 
