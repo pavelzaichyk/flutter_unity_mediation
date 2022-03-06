@@ -93,12 +93,12 @@ AdMob ad source requires additional configuration. If you use AdMob add your AdM
 
 Source | iOS | Android
 --- | --- | --- 
-[AdColony](https://docs.unity.com/mediation/AdSourceSetupAdColony.htm) | ```pod 'UnityMediationAdColonyAdapter'``` | ```implementation "com.unity3d.mediation:adcolony-adapter:0.3.0"```
-[AppLovin](https://docs.unity.com/mediation/AdSourceSetupAppLovin.htm) | ```pod 'UnityMediationAppLovinAdapter'``` | ```implementation "com.unity3d.mediation:applovin-adapter:0.3.0"```
-[IronSource](https://docs.unity.com/mediation/AdSourceSetupIronSource.htm) | ```pod 'UnityMediationIronSourceAdapter'``` | ```implementation "com.unity3d.mediation:ironsource-adapter:0.3.0"  ```
-[Vungle](https://docs.unity.com/mediation/AdSourceSetupVungle.htm) | ```pod 'UnityMediationVungleAdapter'``` | ```implementation "com.unity3d.mediation:vungle-adapter:0.3.0"```
-[Meta Audience Network ](https://docs.unity.com/mediation/AdSourceSetupMetaAudienceNetwork.htm) | ```pod 'UnityMediationFacebookAdapter'``` | ```implementation "com.unity3d.mediation:facebook-adapter:0.3.0"```
-[AdMob](https://docs.unity.com/mediation/AdSourceSetupAdMob.htm) | ```pod 'UnityMediationAdmobAdapter'``` | ```implementation "com.unity3d.mediation:admob-adapter:0.3.0"```
+[AdColony](https://docs.unity.com/mediation/AdSourceSetupAdColony.htm) | ```pod 'UnityMediationAdColonyAdapter'``` | ```implementation "com.unity3d.mediation:adcolony-adapter:0.4.0"```
+[AppLovin](https://docs.unity.com/mediation/AdSourceSetupAppLovin.htm) | ```pod 'UnityMediationAppLovinAdapter'``` | ```implementation "com.unity3d.mediation:applovin-adapter:0.4.0"```
+[IronSource](https://docs.unity.com/mediation/AdSourceSetupIronSource.htm) | ```pod 'UnityMediationIronSourceAdapter'``` | ```implementation "com.unity3d.mediation:ironsource-adapter:0.4.0"  ```
+[Vungle](https://docs.unity.com/mediation/AdSourceSetupVungle.htm) | ```pod 'UnityMediationVungleAdapter'``` | ```implementation "com.unity3d.mediation:vungle-adapter:0.4.0"```
+[Meta Audience Network ](https://docs.unity.com/mediation/AdSourceSetupMetaAudienceNetwork.htm) | ```pod 'UnityMediationFacebookAdapter'``` | ```implementation "com.unity3d.mediation:facebook-adapter:0.4.0"```
+[AdMob](https://docs.unity.com/mediation/AdSourceSetupAdMob.htm) | ```pod 'UnityMediationAdmobAdapter'``` | ```implementation "com.unity3d.mediation:admob-adapter:0.4.0"```
 
 
 ### 3. Initialization
@@ -139,6 +139,11 @@ UnityMediation.showRewardedAd(
   onFailed: (adUnitId, error, message) => print('Rewarded Ad $adUnitId failed: $error $message'),
 );
 ```
+
+#### Server-to-server redeem callbacks
+
+To use server-to-server callbacks, you need to set `userId` parameter when call `showRewardedAd`.
+Read more on [https://docs.unity.com/mediation/S2SRedeemCallbacks.html](docs.unity.com).
 
 ### 5. Interstitial Ad
 

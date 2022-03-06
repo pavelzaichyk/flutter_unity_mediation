@@ -31,6 +31,8 @@ public final class UnityMediationConstants {
     public static final String SHOW_CLICK_METHOD = "showClick";
     public static final String REWARD_TYPE_PARAMETER = "rewardType";
     public static final String REWARD_AMOUNT_PARAMETER = "rewardAmountType";
+    public static final String STS_USER_ID_PARAMETER = "userId";
+    public static final String STS_CUSTOMIZED_DATA_PARAMETER = "customizedData";
 
     //state
     public static final String REWARDED_AD_STATE_METHOD = "rewardedAdState";

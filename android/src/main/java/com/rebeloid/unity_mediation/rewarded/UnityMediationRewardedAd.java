@@ -6,8 +6,8 @@ import com.rebeloid.unity_mediation.StateUtils;
 import com.rebeloid.unity_mediation.UnityMediationConstants;
 import com.unity3d.mediation.IRewardedAdLoadListener;
 import com.unity3d.mediation.IRewardedAdShowListener;
-import com.unity3d.mediation.InterstitialAd;
 import com.unity3d.mediation.RewardedAd;
+import com.unity3d.mediation.RewardedAdShowOptions;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -40,7 +40,16 @@ public class UnityMediationRewardedAd {
 
     public boolean show(Map<?, ?> arguments) {
         RewardedAd ad = getAd(arguments);
-        ad.show(showListener);
+        RewardedAdShowOptions options = new RewardedAdShowOptions();
+
+        String userId = (String) arguments.get(UnityMediationConstants.STS_USER_ID_PARAMETER);
+        if (userId != null) {
+            String customData = (String) arguments.get(UnityMediationConstants.STS_CUSTOMIZED_DATA_PARAMETER);
+            RewardedAdShowOptions.S2SRedeemData s2SRedeemData = new RewardedAdShowOptions.S2SRedeemData(userId, customData);
+            options.setS2SRedeemData(s2SRedeemData);
+        }
+
+        ad.show(showListener, options);
         return true;
     }
 

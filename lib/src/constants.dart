@@ -28,6 +28,8 @@ const showClosedMethod = "showClosed";
 const showClickMethod = "showClick";
 const rewardTypeParameter = "rewardType";
 const rewardAmountParameter = "rewardAmountType";
+const stsUserIdParameter = "userId";
+const stsCustomizedDataParameter = "customizedData";
 
 //state
 const rewardedAdStateMethod = "rewardedAdState";

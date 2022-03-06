@@ -39,6 +39,6 @@ android {
 }
 
 dependencies {
-    implementation "com.unity3d.mediation:mediation-sdk:0.3.0"
-    implementation "com.unity3d.mediation:unityads-adapter:0.3.0"
+    implementation "com.unity3d.mediation:mediation-sdk:0.4.0"
+    implementation "com.unity3d.mediation:unityads-adapter:0.4.0"
 }

@@ -39,7 +39,7 @@ class UnityMediationInterstitialAd {
             return ad!
         }
         
-        let newAd = UMSInterstitialAd.init(adUnitId: adUnitId)
+        let newAd = UMSInterstitialAd(adUnitId: adUnitId)
         ads[adUnitId] = newAd
         return newAd
     }

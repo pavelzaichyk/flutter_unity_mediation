@@ -123,6 +123,9 @@ class UnityMediation {
   /// * [onRewarded] - called on when an ad should reward the user.
   /// * [onClosed] - called on when an ad has closed after playback has completed.
   /// * [onFailed] - called on when an ad has a failure during playback.
+  /// Server-to-server redeem callbacks: https://docs.unity.com/mediation/S2SRedeemCallbacks.html
+  /// * [userId] - The publisher's user id. This will be passed along in the S2S reward callback feature to the publisher's S2S server.
+  /// * [customizedData] - The publisher's custom data in whatever string format they wish (ex. JSON). This can be any data that the publisher wants forwarded to their S2S server.
   static Future<void> showRewardedAd({
     required String adUnitId,
     Function(String adUnitId)? onStart,
@@ -130,6 +133,8 @@ class UnityMediation {
     Function(String adUnitId, UnityMediationReward reward)? onRewarded,
     Function(String adUnitId)? onClosed,
     Function(String adUnitId, ShowError error, String errorMessage)? onFailed,
+    String? userId,
+    String? customizedData,
   }) async {
     await _showAd(
       methodName: showRewardedAdMethod,
@@ -139,6 +144,8 @@ class UnityMediation {
       onClosed: onClosed,
       onFailed: onFailed,
       onRewarded: onRewarded,
+      userId: userId,
+      customizedData: customizedData,
     );
   }
 
@@ -174,6 +181,8 @@ class UnityMediation {
     Function(String adUnitId, UnityMediationReward reward)? onRewarded,
     Function(String adUnitId)? onClosed,
     Function(String adUnitId, ShowError error, String errorMessage)? onFailed,
+    String? userId,
+    String? customizedData,
   }) async {
     _adChannels.putIfAbsent(adUnitId, () => _AdMethodChannel(adUnitId)).update(
           onAdStart: onStart,
@@ -182,9 +191,11 @@ class UnityMediation {
           onShowFailed: onFailed,
           onAdRewarded: onRewarded,
         );
-
+    print('USER_ID $userId');
     final args = <String, dynamic>{
       adUnitIdParameter: adUnitId,
+      stsUserIdParameter: userId,
+      stsCustomizedDataParameter: customizedData,
     };
     await _channel.invokeMethod(methodName, args);
   }

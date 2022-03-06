@@ -23,7 +23,14 @@ class UnityMediationRewardedAd {
     
     public func show(_ args: NSDictionary) -> Bool {
         let rewardedAd = getAd(args)
-        rewardedAd.show(with: viewController, delegate: showDelegate)
+        
+        let options = UMSRewardedAdShowOptions()
+        let userId = args[UnityMediationConstants.STS_USER_ID_PARAMETER] as? String
+        if (userId != nil) {
+            options.publisherData.userId = userId
+            options.publisherData.customData = args[UnityMediationConstants.STS_CUSTOMIZED_DATA_PARAMETER] as? String
+        }
+        rewardedAd.show(with: viewController, delegate: showDelegate, showOptions: options)
         return true
     }
     
@@ -39,7 +46,7 @@ class UnityMediationRewardedAd {
             return rewardedAd!
         }
         
-        let ad = UMSRewardedAd.init(adUnitId: adUnitId)
+        let ad = UMSRewardedAd(adUnitId: adUnitId)
         rewardedAds[adUnitId] = ad
         return ad
     }

@@ -27,8 +27,10 @@ struct UnityMediationConstants {
     static let SHOW_START_METHOD = "showStart";
     static let SHOW_CLOSED_METHOD = "showClosed";
     static let SHOW_CLICK_METHOD = "showClick";
-    static let  REWARD_TYPE_PARAMETER = "rewardType";
-    static let  REWARD_AMOUNT_PARAMETER = "rewardAmountType";
+    static let REWARD_TYPE_PARAMETER = "rewardType";
+    static let REWARD_AMOUNT_PARAMETER = "rewardAmountType";
+    static let STS_USER_ID_PARAMETER = "userId";
+    static let STS_CUSTOMIZED_DATA_PARAMETER = "customizedData";
     
     //state
     static let REWARDED_AD_STATE_METHOD = "rewardedAdState";
