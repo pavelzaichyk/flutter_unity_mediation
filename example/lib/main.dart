@@ -16,6 +16,7 @@ class UnityMediationExample extends StatefulWidget {
 }
 
 class _UnityMediationExampleState extends State<UnityMediationExample> {
+  bool _showBanner = false;
   bool _rewardedAdloaded = false;
   bool _interstitialAdloaded = false;
 
@@ -134,6 +135,22 @@ class _UnityMediationExampleState extends State<UnityMediationExample> {
                         : null,
                     child: const Text('Show Interstitial Ad'),
                   ),
+                  ElevatedButton(
+                    onPressed: () {
+                      setState(() {
+                        _showBanner = !_showBanner;
+                      });
+                    },
+                    child: Text(_showBanner ? 'Hide Banner' : 'Show Banner'),
+                  ),
+                  if (_showBanner)
+                    BannerAd(
+                      adUnitId: AdManager.bannerAdUnitId,
+                      onLoad: (adUnitId) => print('Banner loaded: $adUnitId'),
+                      onClick: (adUnitId) => print('Banner clicked: $adUnitId'),
+                      onFailed: (adUnitId, error, message) =>
+                          print('Banner Ad $adUnitId failed: $error $message'),
+                    ),
                 ],
               ),
             ],
@@ -161,5 +178,9 @@ class AdManager {
 
   static String get rewardedAdUnitId {
     return 'unity_mediation_rewarded';
+  }
+
+  static String get bannerAdUnitId {
+    return 'unity_mediation_banner';
   }
 }

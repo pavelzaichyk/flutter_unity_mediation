@@ -23,6 +23,7 @@
     - [3. Initialization](#3-initialization)
     - [4. Rewarded Ad](#4-rewarded-ad)
     - [5. Interstitial Ad](#5-interstitial-ad)
+    - [6. Banner Ad](#6-banner-ad)
 - [Donate](#donate)
 
 ## Getting Started
@@ -93,12 +94,12 @@ AdMob ad source requires additional configuration. If you use AdMob add your AdM
 
 Source | iOS | Android
 --- | --- | --- 
-[AdColony](https://docs.unity.com/mediation/AdSourceSetupAdColony.htm) | ```pod 'UnityMediationAdColonyAdapter'``` | ```implementation "com.unity3d.mediation:adcolony-adapter:0.5.0"```
-[AppLovin](https://docs.unity.com/mediation/AdSourceSetupAppLovin.htm) | ```pod 'UnityMediationAppLovinAdapter'``` | ```implementation "com.unity3d.mediation:applovin-adapter:0.5.0"```
-[IronSource](https://docs.unity.com/mediation/AdSourceSetupIronSource.htm) | ```pod 'UnityMediationIronSourceAdapter'``` | ```implementation "com.unity3d.mediation:ironsource-adapter:0.5.0"  ```
-[Vungle](https://docs.unity.com/mediation/AdSourceSetupVungle.htm) | ```pod 'UnityMediationVungleAdapter'``` | ```implementation "com.unity3d.mediation:vungle-adapter:0.5.0"```
-[Meta Audience Network ](https://docs.unity.com/mediation/AdSourceSetupMetaAudienceNetwork.htm) | ```pod 'UnityMediationFacebookAdapter'``` | ```implementation "com.unity3d.mediation:facebook-adapter:0.5.0"```
-[AdMob](https://docs.unity.com/mediation/AdSourceSetupAdMob.htm) | ```pod 'UnityMediationAdmobAdapter'``` | ```implementation "com.unity3d.mediation:admob-adapter:0.5.0"```
+[AdColony](https://docs.unity.com/mediation/AdSourceSetupAdColony.htm) | ```pod 'UnityMediationAdColonyAdapter'``` | ```implementation "com.unity3d.mediation:adcolony-adapter:1.0.0"```
+[AppLovin](https://docs.unity.com/mediation/AdSourceSetupAppLovin.htm) | ```pod 'UnityMediationAppLovinAdapter'``` | ```implementation "com.unity3d.mediation:applovin-adapter:1.0.0"```
+[IronSource](https://docs.unity.com/mediation/AdSourceSetupIronSource.htm) | ```pod 'UnityMediationIronSourceAdapter'``` | ```implementation "com.unity3d.mediation:ironsource-adapter:1.0.0"```
+[Vungle](https://docs.unity.com/mediation/AdSourceSetupVungle.htm) | ```pod 'UnityMediationVungleAdapter'``` | ```implementation "com.unity3d.mediation:vungle-adapter:1.0.1"```
+[Meta Audience Network ](https://docs.unity.com/mediation/AdSourceSetupMetaAudienceNetwork.htm) | ```pod 'UnityMediationFacebookAdapter'``` | ```implementation "com.unity3d.mediation:facebook-adapter:1.0.0"```
+[AdMob](https://docs.unity.com/mediation/AdSourceSetupAdMob.htm) | ```pod 'UnityMediationAdmobAdapter'``` | ```implementation "com.unity3d.mediation:admob-adapter:1.0.0"```
 
 
 ### 3. Initialization
@@ -170,6 +171,21 @@ UnityMediation.showInterstitialAd(
     onClosed: (adUnitId) => print('Interstitial Ad $adUnitId closed'),
     onFailed: (adUnitId, error, message) => print('Interstitial Ad $adUnitId failed: $error $message'),
 );
+```
+
+### 6. Banner Ad
+
+![Banner Ad](https://i.giphy.com/media/ZNaBgdRsRxoPtYmkuF/giphy.gif "Banner Ad")
+
+Place `BannerAd` widget in your app.
+
+```dart
+BannerAd(
+  adUnitId: 'BANNER_AD_UNIT_ID',
+  onLoad: (adUnitId) => print('Banner loaded: $adUnitId'),
+  onClick: (adUnitId) => print('Banner clicked: $adUnitId'),
+  onFailed: (adUnitId, error, message) => print('Banner Ad $adUnitId failed: $error $message'),
+),
 ```
 
 ## Donate

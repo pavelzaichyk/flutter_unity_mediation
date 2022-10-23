@@ -1,6 +1,7 @@
 struct UnityMediationConstants {
     static let MAIN_CHANNEL = "com.rebeloid.unity_mediation";
     static let VIDEO_AD_CHANNEL = MAIN_CHANNEL + "/videoAd";
+    static let BANNER_AD_CHANNEL = MAIN_CHANNEL + "/bannerAd";
     
     static let AD_UNIT_ID_PARAMETER = "adUnitId";
     static let ERROR_CODE_PARAMETER = "errorCode";
@@ -35,4 +36,11 @@ struct UnityMediationConstants {
     //state
     static let REWARDED_AD_STATE_METHOD = "rewardedAdState";
     static let INTERSTITIAL_AD_STATE_METHOD = "interstitialAdStateMethod";
+
+    //banner
+    static let HEIGHT_PARAMETER = "height";
+    static let WIDTH_PARAMETER = "width";
+    static let BANNER_ERROR_METHOD = "bannerError";
+    static let BANNER_LOADED_METHOD = "bannerLoaded";
+    static let BANNER_CLICKED_METHOD = "bannerClicked";
 }

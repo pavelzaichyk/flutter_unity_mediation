@@ -16,6 +16,14 @@ public final class ErrorUtils {
                 return "networkError";
             case SDK_NOT_INITIALIZED:
                 return "sdkNotInitialized";
+            case AD_UNIT_LOADING:
+                return "adUnitLoading";
+            case AD_UNIT_SHOWING:
+                return "adUnitShowing";
+            case MISSING_MANDATORY_MEMBER_VALUES:
+                return "missingMandatoryMemberValues";
+            case TOO_MANY_LOAD_REQUESTS:
+                return "tooManyLoadRequests";
             default:
                 return "";
         }

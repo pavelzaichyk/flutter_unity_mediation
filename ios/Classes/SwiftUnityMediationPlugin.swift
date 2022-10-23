@@ -36,5 +36,10 @@ public class SwiftUnityMediationPlugin: NSObject, FlutterPlugin {
                 result(FlutterMethodNotImplemented)
             }
         })
+        
+        registrar.register(
+            BannerAdFactory(messenger: binaryMessenger, viewController: viewController),
+            withId: UnityMediationConstants.BANNER_AD_CHANNEL
+        )
     }
 }

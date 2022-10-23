@@ -4,6 +4,7 @@ import android.app.Activity;
 
 import androidx.annotation.NonNull;
 
+import com.rebeloid.unity_mediation.banner.BannerAdFactory;
 import com.rebeloid.unity_mediation.initialization.UnityMediationInitialization;
 import com.rebeloid.unity_mediation.interstitial.UnityMediationInterstitialAd;
 import com.rebeloid.unity_mediation.rewarded.UnityMediationRewardedAd;
@@ -30,10 +31,14 @@ public class UnityMediationPlugin implements FlutterPlugin, MethodCallHandler, A
     private UnityMediationInitialization unityMediationInitialization;
     private UnityMediationInterstitialAd interstitialAd;
     private UnityMediationRewardedAd rewardedAd;
+    private BannerAdFactory bannerAdFactory;
 
     @Override
     public void onAttachedToEngine(@NonNull FlutterPluginBinding flutterPluginBinding) {
         binaryMessenger = flutterPluginBinding.getBinaryMessenger();
+        bannerAdFactory = new BannerAdFactory(binaryMessenger);
+        flutterPluginBinding.getPlatformViewRegistry()
+                .registerViewFactory(UnityMediationConstants.BANNER_AD_CHANNEL, bannerAdFactory);
     }
 
     @Override
@@ -84,6 +89,7 @@ public class UnityMediationPlugin implements FlutterPlugin, MethodCallHandler, A
         channel = new MethodChannel(binaryMessenger, UnityMediationConstants.MAIN_CHANNEL);
         channel.setMethodCallHandler(this);
         unityMediationInitialization = new UnityMediationInitialization(channel);
+        bannerAdFactory.setActivity(activity);
     }
 
     @Override

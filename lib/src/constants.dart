@@ -1,5 +1,6 @@
 const mainChannel = "com.rebeloid.unity_mediation";
 const videoAdChannel = mainChannel + "/videoAd";
+const bannerAdChannel = mainChannel + "/bannerAd";
 
 const adUnitIdParameter = "adUnitId";
 const errorCodeParameter = "errorCode";
@@ -34,3 +35,9 @@ const stsCustomizedDataParameter = "customizedData";
 //state
 const rewardedAdStateMethod = "rewardedAdState";
 const interstitialAdStateMethod = "interstitialAdStateMethod";
+//banner
+const bannerHeightParameter = "height";
+const bannerWidthParameter = "width";
+const bannerErrorMethod = "bannerError";
+const bannerLoadedMethod = "bannerLoaded";
+const bannerClickedMethod = "bannerClicked";

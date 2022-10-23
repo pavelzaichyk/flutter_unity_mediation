@@ -4,6 +4,7 @@ public final class UnityMediationConstants {
 
     public static final String MAIN_CHANNEL = "com.rebeloid.unity_mediation";
     public static final String VIDEO_AD_CHANNEL = MAIN_CHANNEL + "/videoAd";
+    public static final String BANNER_AD_CHANNEL = MAIN_CHANNEL + "/bannerAd";
     public static final String AD_UNIT_ID_PARAMETER = "adUnitId";
     public static final String ERROR_CODE_PARAMETER = "errorCode";
     public static final String ERROR_MESSAGE_PARAMETER = "errorMessage";
@@ -37,6 +38,13 @@ public final class UnityMediationConstants {
     //state
     public static final String REWARDED_AD_STATE_METHOD = "rewardedAdState";
     public static final String INTERSTITIAL_AD_STATE_METHOD = "interstitialAdStateMethod";
+
+    //banner
+    public static final String HEIGHT_PARAMETER = "height";
+    public static final String WIDTH_PARAMETER = "width";
+    public static final String BANNER_ERROR_METHOD = "bannerError";
+    public static final String BANNER_LOADED_METHOD = "bannerLoaded";
+    public static final String BANNER_CLICKED_METHOD = "bannerClicked";
 
     private UnityMediationConstants() {
     }

@@ -1,3 +1,8 @@
+## 0.1.0
+
+* Switched Unity Mediation SDK to version 1.0.0
+* Added Banner Ads support
+
 ## 0.0.6
 
 * Switched Unity Mediation SDK to version 0.5.0

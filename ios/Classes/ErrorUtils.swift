@@ -11,6 +11,12 @@ class ErrorUtils {
             return "networkError";
         case .sdkNotInitialized:
             return "sdkNotInitialized";
+        case .adUnitLoading:
+            return "adUnitLoading";
+        case .adUnitShowing:
+            return "adUnitShowing";
+        case .missingMandatoryMemberValues:
+            return "missingMandatoryMemberValues";
         @unknown default:
             return ""
         }
