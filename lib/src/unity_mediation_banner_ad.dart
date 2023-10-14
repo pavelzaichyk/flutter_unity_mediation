@@ -19,7 +19,8 @@ class BannerAd extends StatefulWidget {
   final void Function(String adUnitId)? onClick;
 
   /// Called when unity ads banner encounters an error.
-  final void Function(String adUnitId, LoadError error, String errorMessage)? onFailed;
+  final void Function(String adUnitId, LoadError error, String errorMessage)?
+      onFailed;
 
   /// This widget is used to contain Banner Ads.
   const BannerAd({
@@ -112,8 +113,9 @@ class BannerAdState extends State<BannerAd> {
   }
 
   LoadError _loadErrorFromString(String error) {
-    return LoadError.values
-        .firstWhere((e) => error == e.toString().split('.').last, orElse: () => LoadError.unknown);
+    return LoadError.values.firstWhere(
+        (e) => error == e.toString().split('.').last,
+        orElse: () => LoadError.unknown);
   }
 }
 

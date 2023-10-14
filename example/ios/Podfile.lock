@@ -5,11 +5,11 @@ PODS:
     - Flutter
     - UnityMediationSdk
     - UnityMediationUnityAdapter
-  - UnityAds (4.4.1)
+  - UnityAds (4.9.1)
   - UnityMediationAdapter (3.0.2):
     - UnityMediationLogging (~> 1.0)
   - UnityMediationLogging (1.0.1)
-  - UnityMediationSdk (1.0.3):
+  - UnityMediationSdk (1.0.4):
     - Protobuf (~> 3.12.0)
     - UnityMediationAdapter (~> 3.0)
     - UnityMediationLogging (~> 1.0)
@@ -44,13 +44,13 @@ SPEC CHECKSUMS:
   Flutter: f04841e97a9d0b0a8025694d0796dd46242b2854
   Protobuf: 2793fcd0622a00b546c60e7cbbcc493e043e9bb9
   unity_mediation: e2e98755cef086fd91807fbdba99d0300b00c9ef
-  UnityAds: 1af6c4fdd7030c2593c58f520504e167561175ab
+  UnityAds: 6fa6b68b831706c9761dcd97555dd60b03e3254b
   UnityMediationAdapter: 92d76b74095cbd485c03d96115e9201e5b46fbf7
   UnityMediationLogging: 1a62837a67e0fbef4656c17520abdaea17fc5c0a
-  UnityMediationSdk: 013df23a5aeba5647785dfa95df37fa979b6132b
+  UnityMediationSdk: 684aaea9f1c5cfc71e6e588ea64dc42d0b298cda
   UnityMediationUnityAdapter: 7396edc2fcc5e826679d9b69ed634343de5d2247
   UnityServicesIdentifiers: 1cebbb5c4ff1663b94a845beb47d039a569212bb
 
-PODFILE CHECKSUM: 2b6cfef510a2952ea8c883281f1ec1b5f6316300
+PODFILE CHECKSUM: 2e51c49945bcdb3adde9b7bf16453acc2ae83c03
 
 COCOAPODS: 1.11.2

@@ -21,7 +21,8 @@ class UnityMediation {
     Map<String, dynamic> arguments = {
       gameIdParameter: gameId,
     };
-    _channel.setMethodCallHandler((call) => _initMethodCall(call, onComplete, onFailed));
+    _channel.setMethodCallHandler(
+        (call) => _initMethodCall(call, onComplete, onFailed));
     await _channel.invokeMethod(initMethod, arguments);
   }
 
@@ -35,7 +36,8 @@ class UnityMediation {
         onComplete?.call();
         break;
       case initFailedMethod:
-        onFailed?.call(_initializationErrorFromString(call.arguments[errorCodeParameter]),
+        onFailed?.call(
+            _initializationErrorFromString(call.arguments[errorCodeParameter]),
             call.arguments[errorMessageParameter]);
         break;
     }
@@ -43,7 +45,8 @@ class UnityMediation {
   }
 
   static InitializationError _initializationErrorFromString(String error) {
-    return InitializationError.values.firstWhere((e) => error == e.toString().split('.').last,
+    return InitializationError.values.firstWhere(
+        (e) => error == e.toString().split('.').last,
         orElse: () => InitializationError.unknown);
   }
 
@@ -54,7 +57,8 @@ class UnityMediation {
   }
 
   static InitializationState _initializationStateFromString(String state) {
-    return InitializationState.values.firstWhere((e) => state == e.toString().split('.').last,
+    return InitializationState.values.firstWhere(
+        (e) => state == e.toString().split('.').last,
         orElse: () => InitializationState.uninitialized);
   }
 
@@ -216,8 +220,9 @@ class UnityMediation {
   }
 
   static AdState _adStateFromString(String state) {
-    return AdState.values
-        .firstWhere((e) => state == e.toString().split('.').last, orElse: () => AdState.unloaded);
+    return AdState.values.firstWhere(
+        (e) => state == e.toString().split('.').last,
+        orElse: () => AdState.unloaded);
   }
 }
 
@@ -316,18 +321,21 @@ class _AdMethodChannel {
   Function(String adUnitId)? onAdClosed;
   Function(String adUnitId, ShowError error, String errorMessage)? onShowFailed;
 
-  _AdMethodChannel(String adUnitId) : channel = MethodChannel('${videoAdChannel}_$adUnitId') {
+  _AdMethodChannel(String adUnitId)
+      : channel = MethodChannel('${videoAdChannel}_$adUnitId') {
     channel.setMethodCallHandler(_methodCallHandler);
   }
 
   void update({
     Function(String adUnitId)? onLoadComplete,
-    Function(String adUnitId, LoadError error, String errorMessage)? onLoadFailed,
+    Function(String adUnitId, LoadError error, String errorMessage)?
+        onLoadFailed,
     Function(String adUnitId)? onAdStart,
     Function(String adUnitId)? onAdClick,
     Function(String adUnitId, UnityMediationReward reward)? onAdRewarded,
     Function(String adUnitId)? onAdClosed,
-    Function(String adUnitId, ShowError error, String errorMessage)? onShowFailed,
+    Function(String adUnitId, ShowError error, String errorMessage)?
+        onShowFailed,
   }) {
     this.onLoadComplete = onLoadComplete ?? this.onLoadComplete;
     this.onLoadFailed = onLoadFailed ?? this.onLoadFailed;
@@ -378,12 +386,14 @@ class _AdMethodChannel {
   }
 
   LoadError _loadErrorFromString(String error) {
-    return LoadError.values
-        .firstWhere((e) => error == e.toString().split('.').last, orElse: () => LoadError.unknown);
+    return LoadError.values.firstWhere(
+        (e) => error == e.toString().split('.').last,
+        orElse: () => LoadError.unknown);
   }
 
   ShowError _showErrorFromString(String error) {
-    return ShowError.values
-        .firstWhere((e) => error == e.toString().split('.').last, orElse: () => ShowError.unknown);
+    return ShowError.values.firstWhere(
+        (e) => error == e.toString().split('.').last,
+        orElse: () => ShowError.unknown);
   }
 }

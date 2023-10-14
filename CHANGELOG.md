@@ -1,3 +1,8 @@
+## 0.1.1
+
+* Update README
+* Other minor fixes
+
 ## 0.1.0
 
 * Switched Unity Mediation SDK to version 1.0.0

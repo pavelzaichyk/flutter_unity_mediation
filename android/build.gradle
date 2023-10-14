@@ -16,7 +16,6 @@ rootProject.allprojects {
     repositories {
         google()
         mavenCentral()
-        jcenter()
         maven {
             url 'https://unity3ddist.jfrog.io/artifactory/unity-mediation-mvn-prod-local/'
         }
